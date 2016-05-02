@@ -80,6 +80,14 @@ class Util {
         return str_replace($this->thaimapper->mixVowelRm, $this->thaimapper->mixVowelTh, $romanize);
     }
 
+    public function convertAO($txt) {
+        return str_replace("ัโ", "ะโ", $txt);
+    }
+
+    public function convertAE($txt) {
+        return str_replace("ัเ", "ะเ", $txt);
+    }
+
     public function convertThaiVowelPrefix($thaiChar) {
         $thaiChar = "     " . $thaiChar; // before space 4 after space 6  reserve  for condition
         $charList = $this->charList($thaiChar);
@@ -108,18 +116,17 @@ class Util {
                 if ($condition1) {
                     $charList = $this->swapArray($check, $charList, $i);
                     $charList = $this->swapArray($check, $charList, $i - 1);
-                }  
-                elseif ($condition2){
+                } elseif ($condition2) {
                     $charList = $this->swapArray($check, $charList, $i);
                     $charList = $this->swapArray($check, $charList, $i - 1);
                     $charList = $this->swapArray($check, $charList, $i - 2);
-                }
-                elseif ($this->isThaiConsonant($charList[$i - 1])) {
+                } elseif ($this->isThaiConsonant($charList[$i - 1])) {
                     $charList = $this->swapArray($check, $charList, $i);
                 }
             }
         }
-        return str_replace(" ", "", $this->convertListTostring($charList));
+//        return str_replace(" ", "", $this->convertListTostring($charList));
+        return trim( $this->convertListTostring($charList));
     }
 
     public function convertThaiVowelInFist($thaiChar) {

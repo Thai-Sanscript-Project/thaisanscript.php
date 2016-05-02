@@ -44,7 +44,7 @@ class ThaiSanscriptTest extends PHPUnit_Framework_TestCase {
 
     public function testmappingIsThaiVowel() {
         $vowel = $this->thaiMapper->mappingIsThaiVowel();
-        $assrt = "ั,า,ิ,ี,ุ,ู,ฤ,เ,โ,ไ,เา";
+        $assrt = "ั,า,ิ,ี,ุ,ู,ฤ,ฤๅ,ฦ,ฦๅ,เ,โ,ไ,เา";
         $revert = $this->thaiMapper->setRevertFlag(array(), $vowel);
         $src = implode(",", $revert);
         $this->assertEquals($assrt, $src);

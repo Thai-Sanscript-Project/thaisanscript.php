@@ -13,7 +13,7 @@ class ThaiVisargaConvert {
     }
 
     public function convert($thaiChar) {
-        $thaiChar = "    " . $thaiChar . "      "; // before space 4 after space 6  reserve  for condition
+        $thaiChar = "    " . $thaiChar . "       "; // before space 4 after space 6  reserve  for condition
         $charList = $this->util->charList($thaiChar);
 
         foreach ($charList as $i => $char) {
@@ -26,7 +26,8 @@ class ThaiVisargaConvert {
                 $charList = $this->thaivisarga_rule($charList, $i);
             }
         }
-        return str_replace(" ", "", $this->util->convertListTostring($charList));
+//        return str_replace(" ", "", $this->util->convertListTostring($charList));
+        return trim($this->util->convertListTostring($charList));
     }
 
     protected function a_before_rule($charList, $i) {
@@ -113,6 +114,7 @@ class ThaiVisargaConvert {
     protected function thaivisarga_consonantclusters($charList, $i) {
 //          
 //        vajracchedikā วัชรัจเฉทิกา
+//        วะชระจฉเทิกา
 //        CACRVCCVC------ visarga
 //        bījagrāma พีชะครามะ
 //        --CACRVCV non visarga
@@ -122,11 +124,16 @@ class ThaiVisargaConvert {
 //        --CAPRAJ non visarga
 //        sarvajñāya สรรวะชญายะ
 //        0000ACCV non visarga
-//           C A C R V C[C] visarga
-//           C A C R V C[V] non visarga
-//           C A C R V[H]C non visarga
-//           C A[P R A J] non visarga
-//           0 1 2 3 4 5 6
+//        nāvadhyānaprekṣiṇa นาวัธยานัเปรกษิณะ
+//        --------CACRVCCV   non visarga
+//        upaśrotrasthāne อุปัโศรตรัสถาเน
+//        -CACRVCCV       non visarga
+//           C A C R V C[C] visarga   1
+//           C A C R V C[V] non visarga 2
+//           C A C R V[H]C non visarga 3
+//           C A[P R A J] non visarga 4
+//           C A C R V C C V non visarga 5
+//           0 1 2 3 4 5 6 7
         $_before4 = $charList[$i - 4];
         $_before3 = $charList[$i - 3];
         $_before2 = $charList[$i - 2];
@@ -137,6 +144,7 @@ class ThaiVisargaConvert {
         $_after3 = $charList[$i + 3];
         $_after4 = $charList[$i + 4];
         $_after5 = $charList[$i + 5];
+        $_after6 = $charList[$i + 6];
 
         $condition = $this->util->isThaiConsonant($_before1) && //C
                 $_current == "ะ" && //A
@@ -148,9 +156,13 @@ class ThaiVisargaConvert {
                 $this->util->isThaiConsonant($_after5) && //C
                 !($_after1 == "ป" && $_after2 == "ร" && $_after3 == "ะ" && $_after4 == "ช" ); //[P R A J]
 
+//        $condition2 = $condition && $this->util->isThaiVowel($_after6);
         if ($condition) {
             $charList[$i] = "ั";
         }
+//        if ($condition2) {
+////            $charList[$i] = "ะ";
+//        }
         return $charList;
     }
 

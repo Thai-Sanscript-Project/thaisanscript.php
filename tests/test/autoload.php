@@ -1,7 +1,7 @@
 <?php
-include '../src/ThaiSanscriptAPI.php';
-include '../src/ThaiSanscriptRule.php';
-include '../src/ThaiSanscriptInformRule.php';
-include '../src/ThaiVisargaRuleConvert.php';
-include '../src/Util.php';
-include '../src/ThaiSanscript.php';
+include '../thaisanscript/ThaiSanscriptAPI.php';
+include '../thaisanscript/ThaiSanscriptRule.php';
+include '../thaisanscript/ThaiSanscriptInformRule.php';
+include '../thaisanscript/ThaiVisargaRuleConvert.php';
+include '../thaisanscript/Util.php';
+include '../thaisanscript/ThaiSanscript.php';

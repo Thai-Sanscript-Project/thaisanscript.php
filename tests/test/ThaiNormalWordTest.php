@@ -2,23 +2,31 @@
 
 use ThaiSanskrit\ThaiSanscriptAPI;
 
-class ProviderTest extends PHPUnit_Framework_TestCase {
+class ThaiNormalWordTest extends PHPUnit_Framework_TestCase {
 
     public function testCaseProvider() {
         // parse your data file however you want
         $data = array();
-        foreach (file('test_data.txt') as $line) {
-            $data[] = explode("\t", trim($line));
+        foreach (file('./test/DataProviderWordTest.csv') as $line) {
+            $data[] = explode(",", trim($line));
         }
-
         return $data;
     }
 
     /**
      * @dataProvider testCaseProvider
      */
-    public function testAddition($num1, $num2, $expectedResult) {
-        $this->assertEquals($expectedResult, $num1 + $num2);
+    public function testAddition($roman, $thai) {
+        $roman = trim($roman);
+        $thai = trim($thai);
+        $this->spacialCase($roman, $thai);
+    }
+
+    public function spacialCase($src, $asrt) {
+        $thaiSanscriptAPI = new ThaiSanscriptAPI();
+        $src = $thaiSanscriptAPI->transliterationTracking($src);
+        echo " ['ASRT :" . $asrt . "' : '" . $src . "'] \n";
+        $this->assertEquals($asrt, $src);
     }
 
 }

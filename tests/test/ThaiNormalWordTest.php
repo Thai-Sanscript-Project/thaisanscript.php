@@ -7,7 +7,9 @@ class ThaiNormalWordTest extends PHPUnit_Framework_TestCase {
     public function testCaseProvider() {
         // parse your data file however you want
         $data = array();
-        foreach (file('./test/DataProviderWordTest.csv') as $line) {
+        $file = file('./test/DataProviderWordTest.csv');
+        unset($file[0]);
+        foreach ($file as $line) {
             $data[] = explode(",", trim($line));
         }
         return $data;

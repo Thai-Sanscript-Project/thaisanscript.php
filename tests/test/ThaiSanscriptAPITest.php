@@ -18,8 +18,11 @@ class ThaiSanscriptAPITest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($asrt, $src);
     }
 
-    public function line_split() {
-        $asrt = "as df ฟหกดเสวง";
+    public function testLine_split() {
+        $asrt = array(array("xxx", "xxx", "xxx", "xxx"), array("zzz", "zzz", "zzz", "zzz"));
+        $param = "xxx@xxx@xxx@xxx\n"
+                . "zzz@zzz@zzz@zzz";
+        $src = $this->api->line_split($param);
         $src = $this->assertEquals($asrt, $src);
     }
 

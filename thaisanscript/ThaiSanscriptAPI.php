@@ -12,11 +12,11 @@ class ThaiSanscriptAPI {
     /* @var $thaiRule ThaiSanskrit\ThaiSanscriptRule */
     public $thaiRule;
     private $spaceDilimiter = '@';
-    private $mode = '2';
+    private $mode = 2;
 
-    public function __construct($mode = '1') {
+    public function __construct($mode = '') {
         mb_internal_encoding("UTF-8");
-        $this->mode = $mode;
+        $this->mode = $mode ? $mode : $this->mode;
         $this->thaiRule = new ThaiSanscriptRule();
         $this->thaiInformRule = new ThaiSanscriptInformRule();
     }
@@ -41,16 +41,21 @@ class ThaiSanscriptAPI {
         return $this->thaiRule->convert($txt);
     }
 
+//    public function jsonOutput($txt) {
+//        $txt = $this->prepareTxt($txt);
+//        $output = array();
+//        if ($this->mode == 1) {
+//            $output = $this->convertSyllableTxt($txt);
+//        } elseif ($this->mode == 2) {
+//            $output = $this->convertLineTxt($txt);
+//        } elseif ($this->mode == 3) {
+//            $output = $this->convertAllTxt($txt);
+//        } 
+//        return json_encode($output);
+//    }
     public function jsonOutput($txt) {
         $txt = $this->prepareTxt($txt);
-        $output = array();
-        if ($this->mode == 1) {
-            $output = $this->convertSyllableTxt($txt);
-        } elseif ($this->mode == 2) {
-            $output = $this->convertLineTxt($txt);
-        } elseif ($this->mode == 3) {
-            $output = $this->convertAllTxt($txt);
-        }
+        $output = $this->convertLineTxt($txt);
         return json_encode($output);
     }
 
@@ -81,7 +86,6 @@ class ThaiSanscriptAPI {
         $output[0] = array();
         $output[1] = array();
         $txtPool = $this->line_split($txt);
-//        $txtPool = preg_split('/\r\n|\r|\n/', $txt);
         foreach ($txtPool as $i => $line) {
             foreach ($line as $j => $syllable) {
                 $output[0][$i][$j] = $this->convertThaiInform($syllable);
@@ -92,9 +96,14 @@ class ThaiSanscriptAPI {
         return $output;
     }
 
-    public function transliterationTracking($romanize) {
-        $real = $this->thaiRule->convert($romanize);
-        $track = $this->thaiRule->convertTrackMode($romanize);
+    public function transliterationTracking($romanize, $mode = 1) {
+        if ($mode == 1) {
+            $real = $this->thaiRule->convert($romanize);
+            $track = $this->thaiRule->convertTrackMode($romanize);
+        } else {
+            $real = $this->thaiInformRule->convert($romanize);
+            $track = $this->thaiInformRule->convertTrackMode($romanize);
+        }
         $check_concurrent = $real == $track;
         if ($check_concurrent) {
             return $track;

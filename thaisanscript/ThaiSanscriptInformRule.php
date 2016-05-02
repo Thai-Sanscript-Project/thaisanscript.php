@@ -36,23 +36,36 @@ class ThaiSanscriptInformRule {
     }
 
     public function convertTrackMode($txt) {
+        $this->printTrackMode($txt);
         $txt = $this->util->convertNumber($txt);
+        $this->printTrackMode($txt);
         $txt = $this->util->convertRomanizeMixConsonant($txt);
+        $this->printTrackMode($txt);
         $txt = $this->util->convertRomanizeMixVowel($txt);
+        $this->printTrackMode($txt);
         $txt = $this->util->convertRomanizeSingleConsonant($txt);
+        $this->printTrackMode($txt);
         $txt = $this->util->convertRomanizeSingleVowel($txt);
+        $this->printTrackMode($txt);
         $txt = $this->convertBindu($txt);
+        $this->printTrackMode($txt);
         $txt = $this->util->convertThaiVowelInFist($txt);
+        $this->printTrackMode($txt);
         $txt = $this->util->convertThaiVowelPrefix($txt);
+        $this->printTrackMode($txt);
         $txt = $this->removeA($txt);
+        $this->printTrackMode($txt);
         $txt = $this->swapAnusvaraAndChandrabindu($txt);
+        $this->printTrackMode($txt);
         $txt = $this->convertChandrabindu($txt);
+        $this->printTrackMode($txt);
         $txt = $this->util->convertThaiAAInFist($txt);
+        $this->printTrackMode($txt);
 
         return $txt;
     }
 
-    public function printTrackMode($txt, $isTracking) {
+    public function printTrackMode($txt) {
         echo ($txt . " -> ");
     }
 
@@ -119,7 +132,7 @@ class ThaiSanscriptInformRule {
                 }
             }
         }
-        return str_replace(" ", "", $this->util->convertListTostring($charList));
+        return trim($this->util->convertListTostring($charList));
     }
 
 }

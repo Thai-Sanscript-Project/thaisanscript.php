@@ -28,7 +28,11 @@ class ThaiSanscript {
 
 // Transliteration process option defaults.
     public $chandrabindu = "ँ";
+    public $chandrabinduThaiInform = "ัํ";
+    public $chandrabinduRoman = "m̐";
+    public $chandrabinduRomanSingle = "ṁ";
     public $anusvara = "ํ";
+    
     public $thaiVowelInFist = array(
         'ะ' => 'อะ',
         "า" => "อา",

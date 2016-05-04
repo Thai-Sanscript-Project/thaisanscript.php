@@ -20,6 +20,7 @@ class ThaiSanscriptRule {
 
     public function convert($romanize) {
         $txt = $romanize;
+        $txt = $this->util->convertRomanChandrabinduToSingle($txt);
         $txt = $this->util->convertNumber($txt);
         $txt = $this->util->convertRomanizeMixConsonant($txt);
         $txt = $this->util->convertRomanizeMixVowel($txt);
@@ -32,12 +33,14 @@ class ThaiSanscriptRule {
         $txt = $this->util->convertThaiAAInFist($txt);
         $txt = $this->util->convertAE($txt);
         $txt = $this->util->convertAO($txt);
-        
+
         return $txt;
     }
 
     public function convertTrackMode($romanize) {
         $txt = $romanize;
+        $this->printTrackMode($txt);
+        $txt = $this->util->convertRomanChandrabinduToSingle($txt);
         ThaiSanscriptRule::printTrackMode($txt, "begin");
         $txt = $this->util->convertNumber($txt);
         ThaiSanscriptRule::printTrackMode($txt, "Number");
@@ -82,7 +85,7 @@ class ThaiSanscriptRule {
             }
         }
         //return str_replace(" ", "", $this->util->convertListTostring($charList));
-        return trim( $this->util->convertListTostring($charList));
+        return trim($this->util->convertListTostring($charList));
     }
 
 //    public function convertThaiAAInFist($thaiChar) { //แปลงท้ายสุดแก้ปัญหา สระ เอา จะเหลือสระอา ดังนั้นต้องแปลงอีก

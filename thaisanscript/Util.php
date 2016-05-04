@@ -60,6 +60,10 @@ class Util {
 
     /*     * *******************    convert ************************ */
 
+    public function convertRomanChandrabinduToSingle($txt) {
+        return str_replace($this->thaimapper->chandrabinduRoman, $this->thaimapper->chandrabinduRomanSingle, $txt);
+    }
+
     public function convertNumber($txt) {
         return str_replace($this->thaimapper->numRm, $this->thaimapper->numTh, $txt);
     }
@@ -92,12 +96,12 @@ class Util {
         $thaiChar = "     " . $thaiChar; // before space 4 after space 6  reserve  for condition
         $charList = $this->charList($thaiChar);
         foreach ($charList as $i => $char) {
-//        for ($i = 1; $i < count($charList); $i++) {
             $check = $char === "เ" ||
                     $char === "โ" ||
                     $char === "ไ";
             if ($check) {
-
+                //432101234 แบบปรับรูป
+                // FCR
                 $condition1 = $check &&
                         $this->isThaiConsonant($charList[$i - 2]) &&
                         $charList[$i - 1] == "ร" &&
@@ -105,6 +109,9 @@ class Util {
                         $charList[$i - 3] != "โ" &&
                         $charList[$i - 3] != "ไ";
 //                  ยaตฺกฺรเาญฺ
+                //432101234 แบบคงรูป
+                //FCDR
+                
                 $condition2 = $check &&
                         $this->isThaiConsonant($charList[$i - 3]) &&
                         $charList[$i - 1] == "ร" &&
@@ -126,7 +133,7 @@ class Util {
             }
         }
 //        return str_replace(" ", "", $this->convertListTostring($charList));
-        return trim( $this->convertListTostring($charList));
+        return trim($this->convertListTostring($charList));
     }
 
     public function convertThaiVowelInFist($thaiChar) {

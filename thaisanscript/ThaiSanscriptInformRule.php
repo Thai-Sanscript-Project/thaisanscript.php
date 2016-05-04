@@ -19,6 +19,7 @@ class ThaiSanscriptInformRule {
     }
 
     public function convert($txt) {
+        $txt = $this->util->convertRomanChandrabinduToSingle($txt);
         $txt = $this->util->convertNumber($txt);
         $txt = $this->util->convertRomanizeMixConsonant($txt);
         $txt = $this->util->convertRomanizeMixVowel($txt);
@@ -36,6 +37,8 @@ class ThaiSanscriptInformRule {
     }
 
     public function convertTrackMode($txt) {
+        $this->printTrackMode($txt);
+        $txt = $this->util->convertRomanChandrabinduToSingle($txt);
         $this->printTrackMode($txt);
         $txt = $this->util->convertNumber($txt);
         $this->printTrackMode($txt);
@@ -98,41 +101,40 @@ class ThaiSanscriptInformRule {
     }
 
     public function removeA($txt) {
-
-        $charList = $this->util->charList($txt);
-
-        foreach ($charList as $i => $char) {
-//        for ($i = 0; $i < count($charList); $i++) {
-            if ($char == "a") {
-                $charList[$i] = "";
-            }
-        }
-        $txt = $this->util->convertListTostring($charList);
-
+        $txt = str_replace("a", "", $txt);
         return $txt;
+//        $charList = $this->util->charList($txt);
+//        foreach ($charList as $i => $char) {
+//            if ($char == "a") {
+//                $charList[$i] = "";
+//            }
+//        }
+//        $txt = $this->util->convertListTostring($charList);
+//        return $txt;
     }
 
     public function convertChandrabindu($txt) {
-        $txt = str_replace($this->informmapper->chandrabindu, "ัํ", $txt);
+        $txt = str_replace($this->informmapper->chandrabindu, $this->informmapper->chandrabinduThaiInform, $txt);
         return $txt;
     }
 
     public function swapAnusvaraAndChandrabindu($txt) {
-        $txt = $txt . "  "; //  after space 2  reserve  for condition
-        $charList = $this->util->charList($txt);
-
-        foreach ($charList as $i => $char) {
-//        for ($i = 1; $i < count($charList); $i++) {
-            if ($char == "า") {
-
-                if ($charList[$i + 1] == "ํ") {
-                    $charList = $this->util->swapArray(TRUE, $charList, $i + 1);
-                } elseif ($charList[$i + 1] == $this->informmapper->chandrabindu) {
-                    $charList = $this->util->swapArray(TRUE, $charList, $i + 1);
-                }
-            }
-        }
-        return trim($this->util->convertListTostring($charList));
+        $txt = str_replace("า" . $this->informmapper->anusvara, $this->informmapper->anusvara . "า", $txt);
+        $txt = str_replace("า" . $this->informmapper->chandrabindu, $this->informmapper->chandrabindu . "า", $txt);
+        return $txt;
+//        $txt = $txt . "  "; //  after space 2  reserve  for condition
+//        $charList = $this->util->charList($txt);       
+//        foreach ($charList as $i => $char) {
+//            if ($char == "า") {
+//
+//                if ($charList[$i + 1] == "ํ") {
+//                    $charList = $this->util->swapArray(TRUE, $charList, $i + 1);
+//                } elseif ($charList[$i + 1] == $this->informmapper->chandrabindu) {
+//                    $charList = $this->util->swapArray(TRUE, $charList, $i + 1);
+//                }
+//            }
+//        }
+//        return trim($this->util->convertListTostring($charList));
     }
 
 }

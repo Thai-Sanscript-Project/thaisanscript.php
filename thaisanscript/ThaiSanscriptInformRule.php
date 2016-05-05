@@ -2,7 +2,6 @@
 
 namespace ThaiSanskrit;
 
-use ThaiSanskrit\Utility;
 use ThaiSanskrit\Util;
 use ThaiSanskrit\ThaiSanscript;
 

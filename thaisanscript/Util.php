@@ -60,6 +60,9 @@ class Util {
 
     /*     * *******************    convert ************************ */
 
+    public function convertAvagarahaRemove($txt) {
+        return str_replace("'", "", $txt);
+    }
     public function convertRomanChandrabinduToSingle($txt) {
         return str_replace($this->thaimapper->chandrabinduRoman, $this->thaimapper->chandrabinduRomanSingle, $txt);
     }

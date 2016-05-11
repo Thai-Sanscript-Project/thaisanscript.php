@@ -18,6 +18,7 @@ class ThaiSanscriptInformRule {
     }
 
     public function convert($txt) {
+        
         $txt = $this->util->convertRomanChandrabinduToSingle($txt);
         $txt = $this->util->convertNumber($txt);
         $txt = $this->util->convertRomanizeMixConsonant($txt);

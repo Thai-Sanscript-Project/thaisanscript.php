@@ -20,6 +20,7 @@ class ThaiSanscriptRule {
 
     public function convert($romanize) {
         $txt = $romanize;
+        $txt = $this->util->convertAvagarahaRemove($txt);
         $txt = $this->util->convertRomanChandrabinduToSingle($txt);
         $txt = $this->util->convertNumber($txt);
         $txt = $this->util->convertRomanizeMixConsonant($txt);
@@ -39,6 +40,7 @@ class ThaiSanscriptRule {
 
     public function convertTrackMode($romanize) {
         $txt = $romanize;
+        $txt = $this->util->convertAvagarahaRemove($txt);
         $this->printTrackMode($txt);
         $txt = $this->util->convertRomanChandrabinduToSingle($txt);
         ThaiSanscriptRule::printTrackMode($txt, "begin");

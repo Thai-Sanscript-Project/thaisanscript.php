@@ -32,7 +32,6 @@ class ThaiSanscript {
     public $chandrabinduRoman = "m̐";
     public $chandrabinduRomanSingle = "ṁ";
     public $anusvara = "ํ";
-    
     public $thaiVowelInFist = array(
         'ะ' => 'อะ',
         "า" => "อา",
@@ -138,6 +137,8 @@ class ThaiSanscript {
     public $revert_vowel;
     public $revert_consonant;
     public $anusvaraLast;
+    public $thaiVowelInFist1;
+    public $thaiVowelInFist2;
 
     public function __construct($inform = FALSE) {
         if ($inform) {
@@ -170,6 +171,10 @@ class ThaiSanscript {
         $return = $this->separate($this->num);
         $this->numTh = $return['th'];
         $this->numRm = $return['rm'];
+
+        $return = $this->separate($this->thaiVowelInFist);
+        $this->thaiVowelInFist1 = $return['rm'];
+        $this->thaiVowelInFist2 =$return['th'];
     }
 
     private function separate($array) {

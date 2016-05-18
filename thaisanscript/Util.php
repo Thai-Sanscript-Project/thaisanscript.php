@@ -63,6 +63,7 @@ class Util {
     public function convertAvagarahaRemove($txt) {
         return str_replace("'", "", $txt);
     }
+
     public function convertRomanChandrabinduToSingle($txt) {
         return str_replace($this->thaimapper->chandrabinduRoman, $this->thaimapper->chandrabinduRomanSingle, $txt);
     }
@@ -103,8 +104,8 @@ class Util {
                     $char === "โ" ||
                     $char === "ไ";
             if ($check) {
-                //432101234 แบบปรับรูป
-                // FCR
+//432101234 แบบปรับรูป
+// FCR
                 $condition1 = $check &&
                         $this->isThaiConsonant($charList[$i - 2]) &&
                         $charList[$i - 1] == "ร" &&
@@ -112,9 +113,9 @@ class Util {
                         $charList[$i - 3] != "โ" &&
                         $charList[$i - 3] != "ไ";
 //                  ยaตฺกฺรเาญฺ
-                //432101234 แบบคงรูป
-                //FCDR
-                
+//432101234 แบบคงรูป
+//FCDR
+
                 $condition2 = $check &&
                         $this->isThaiConsonant($charList[$i - 3]) &&
                         $charList[$i - 1] == "ร" &&
@@ -143,40 +144,47 @@ class Util {
         $thaiChar = $thaiChar . " "; // before space 3 after space 6  reserve  for condition
         $mapping = $this->thaimapper->thaiVowelInFist;
         $charList = $this->charList($thaiChar);
-
+        $s1 = $this->thaimapper->thaiVowelInFist1;
+        $s2 = $this->thaimapper->thaiVowelInFist2;
+//        in_array("Glenn", $people);
         if (isset($charList[0])) {
-//        if (count($charList) > 0) {
-            foreach ($mapping as $key => $value) {
-                if ($charList[0] === $key) {
-                    $charList[0] = $value;
-                }
-//                $charList = $this->charList($thaiChar);
-                foreach ($charList as $index => $char) {
-//                for ($index = 1; $index < count($charList); $index++) {
-                    if ($index > 0) {
-                        $check1 = !$this->isThaiConsonant($charList[$index - 1]) && $char == $key;
-                        $check2 = $charList[$index] != "เ" && $charList[$index] != "า"; //ยกเว้นไว้กรณี สระเอา ก่อน
 
-                        if ($check1 && $check2) {
-                            $charList[$index] = $value;
-                        } elseif ($check1 && $charList[$index] == "เ" && $charList[$index + 1] != "า") {
-                            $charList[$index] = $value;
-                        } elseif ($check1 && $charList[$index] == "า" && $charList[$index - 1] != "เ") {
-                            $charList[$index] = $value;
-                        }
+//            foreach ($mapping as $key => $value) {
+//                if ($charList[0] === $key) {
+//                    $charList[0] = $value;
+//                }
+            if (in_array($charList[0], $s1)) {
+                $charList[0] = str_replace($s1, $s2, $charList[0]);
+            }
+            foreach ($charList as $index => $char) {
+//                for ($index = 1; $index < count($charList); $index++) {
+                if ($index > 0) {
+                    $check1 = !$this->isThaiConsonant($charList[$index - 1]) && in_array($char, $s1); //$char == $key;
+                    $check2 = $charList[$index] != "เ" && $charList[$index] != "า"; //ยกเว้นไว้กรณี สระเอา ก่อน
+
+                    if ($check1 && $check2) {
+                        //$charList[$index] = $value;
+                        $charList[$index] = str_replace($s1, $s2, $charList[$index]);
+                    } elseif ($check1 && $charList[$index] == "เ" && $charList[$index + 1] != "า") {
+                        //$charList[$index] = $value;
+                        $charList[$index] = str_replace($s1, $s2, $charList[$index]);
+                    } elseif ($check1 && $charList[$index] == "า" && $charList[$index - 1] != "เ") {
+                       // $charList[$index] = $value;
+                        $charList[$index] = str_replace($s1, $s2, $charList[$index]);
                     }
                 }
-                $thaiChar = $this->convertListTostring($charList);
-                $thaiChar = str_replace("\xE2\x80\x8D", "", $thaiChar); //Remove ZERO WIDTH JOINER
             }
+            $thaiChar = $this->convertListTostring($charList);
+            $thaiChar = str_replace("\xE2\x80\x8D", "", $thaiChar); //Remove ZERO WIDTH JOINER
         }
+//        }
         return $thaiChar;
     }
 
     public function convertThaiAAInFist($thaiChar) { //แปลงท้ายสุดแก้ปัญหา สระ เอา จะเหลือสระอา ดังนั้นต้องแปลงอีก
         $charList = $this->charList($thaiChar);
         foreach ($charList as $i => $char) {
-            //for ($index = 1; $index < count($charList); $index++) {
+//for ($index = 1; $index < count($charList); $index++) {
             if ($i > 0) {
                 $check1 = !$this->isThaiConsonant($charList[$i - 1]) &&
                         $char == 'า';

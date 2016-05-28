@@ -15,18 +15,14 @@ class ThaiVisargaConvert {
     public function convert($thaiChar) {
         $thaiChar = "    " . $thaiChar . "       "; // before space 4 after space 6  reserve  for condition
         $charList = $this->util->charList($thaiChar);
-
         foreach ($charList as $i => $char) {
-//        for ($i = 0; $i < count($charList); $i++) {
             if ($char === "ะ") {
-
                 $charList = $this->a_before_rule($charList, $i);
                 $charList = $this->ah_rule($charList, $i);
                 $charList = $this->ar_rule($charList, $i);
                 $charList = $this->thaivisarga_rule($charList, $i);
             }
         }
-//        return str_replace(" ", "", $this->util->convertListTostring($charList));
         return trim($this->util->convertListTostring($charList));
     }
 
@@ -35,7 +31,6 @@ class ThaiVisargaConvert {
         $_before = $charList[$i - 1];
         $_current = $charList[$i];
         if ($_before == " " && $_current == "ะ") {
-
             $charList[$i] = "อั";
         }
         return $charList;
@@ -52,7 +47,6 @@ class ThaiVisargaConvert {
                 $_after1 == "ห" &&
                 !$this->util->isThaiVowel($_after2) &&
                 $_after2 != ("์");
-
         if ($condition) {
             $charList[$i] = "";
         }
@@ -65,7 +59,6 @@ class ThaiVisargaConvert {
         $_current = $charList[$i];
         $_after1 = $charList[$i + 1];
         $_after2 = $charList[$i + 2];
-
         $condition = $_current == "ะ" &&
                 $this->util->isThaiConsonant($_before) &&
                 $_after1 == "ร" &&
@@ -78,14 +71,8 @@ class ThaiVisargaConvert {
     }
 
     protected function thaivisarga_rule($charList, $i) {
-        $_before4 = $charList[$i - 4];
-        $_before3 = $charList[$i - 3];
-        $_before2 = $charList[$i - 2];
-        $_before1 = $charList[$i - 1];
-        $_after1 = $charList[$i + 1];
-        $conSarva = !($_before4 == "ส" && $_before3 == "ร" && $_before2 == "ร" && $_before1 == "ว" );
 
-        if (($charList[$i + 1] != "ว" && $conSarva)) { //เว้น ว ไว้ทุก กรณี เช่น ตะว เพื่อป้องกันการ ออกเสียงสระ อัว เช่น ตัว
+        if (($charList[$i + 1] != "ว")) { //เว้น ว ไว้ทุก กรณี เช่น ตะว เพื่อป้องกันการ ออกเสียงสระ อัว เช่น ตัว
             $charList = $this->thaivisarga_non_consonantclusters($charList, $i);
             $charList = $this->thaivisarga_consonantclusters($charList, $i);
             $charList = $this->thaivisarga_lastword($charList, $i);
@@ -99,13 +86,15 @@ class ThaiVisargaConvert {
         $_current = $charList[$i];
         $_after1 = $charList[$i + 1];
         $_after2 = $charList[$i + 2];
-
-        $condition = ($_current === "ะ" &&
+        $_after3 = $charList[$i + 3];
+        $condition = $_current === "ะ" &&
                 $this->util->isThaiConsonant($_after1) &&
-                $this->util->isThaiConsonant($_after2)) &&
-                $_after2 != "ร";
+                $this->util->isThaiConsonant($_after2);
 
-        if ($condition) {
+        $condition1 = $condition && $_after2 != "ร";
+        $condition2 = $condition && $_after2 == "ร" && !$this->util->isThaiVowel($_after3);
+
+        if ($condition1 || $condition2) {
             $charList[$i] = "ั";
         }
         return $charList;
@@ -134,9 +123,7 @@ class ThaiVisargaConvert {
 //           C A[P R A J] non visarga 4
 //           C A C R V C C V non visarga 5
 //           0 1 2 3 4 5 6 7
-        $_before4 = $charList[$i - 4];
-        $_before3 = $charList[$i - 3];
-        $_before2 = $charList[$i - 2];
+
         $_before1 = $charList[$i - 1];
         $_current = $charList[$i];
         $_after1 = $charList[$i + 1];
@@ -144,7 +131,6 @@ class ThaiVisargaConvert {
         $_after3 = $charList[$i + 3];
         $_after4 = $charList[$i + 4];
         $_after5 = $charList[$i + 5];
-        $_after6 = $charList[$i + 6];
 
         $condition = $this->util->isThaiConsonant($_before1) && //C
                 $_current == "ะ" && //A
@@ -156,13 +142,11 @@ class ThaiVisargaConvert {
                 $this->util->isThaiConsonant($_after5) && //C
                 !($_after1 == "ป" && $_after2 == "ร" && $_after3 == "ะ" && $_after4 == "ช" ); //[P R A J]
 
-//        $condition2 = $condition && $this->util->isThaiVowel($_after6);
+
         if ($condition) {
             $charList[$i] = "ั";
         }
-//        if ($condition2) {
-////            $charList[$i] = "ะ";
-//        }
+
         return $charList;
     }
 

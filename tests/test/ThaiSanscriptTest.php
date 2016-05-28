@@ -28,7 +28,7 @@ class ThaiSanscriptTest extends PHPUnit_Framework_TestCase {
         $torevert = $this->thaiMapper->singleConsonant;
         $revert = array();
         $revert = $this->thaiMapper->setRevertFlag($revert, $torevert);
-        $assrt = "k,g,ṅ,c,j,ñ,ṭ,ḍ,ṇ,t,d,n,p,b,m,y,r,l,v,ḻ,ś,ṣ,s,h,ṁ,ṃ,ḥ,'";
+        $assrt = "k,g,ṅ,c,j,ñ,ṭ,ḍ,ṇ,t,d,n,p,b,m,y,r,l,v,ḻ,ś,ṣ,s,h,ṁ,ḥ,'";
         $src = implode(",", $revert);
         $this->assertEquals($assrt, $src);
     }
@@ -36,7 +36,7 @@ class ThaiSanscriptTest extends PHPUnit_Framework_TestCase {
     public function testmappingIsThaiConsonant() {
         $consonant = $this->thaiMapper->mappingIsThaiConsonant();
         //print_r($consonant);
-        $assrt = "อ,ก,ค,ง,จ,ช,ญ,ฏ,ฑ,ณ,ต,ท,น,ป,พ,ม,ย,ร,ล,ว,ฬ,ศ,ษ,ส,ห,ँ,ํ,ห์,',ข,ฉ,ฐ,ถ,ผ,ฆ,ฌ,ฒ,ธ,ภ";
+        $assrt = "อ,ก,ค,ง,จ,ช,ญ,ฏ,ฑ,ณ,ต,ท,น,ป,พ,ม,ย,ร,ล,ว,ฬ,ศ,ษ,ส,ห,ํ,ห์,',ข,ฉ,ฐ,ถ,ผ,ฆ,ฌ,ฒ,ธ,ภ";
         $revert = $this->thaiMapper->setRevertFlag(array(), $consonant);
         $src = implode(",", $revert);
         $this->assertEquals($assrt, $src);
@@ -44,7 +44,7 @@ class ThaiSanscriptTest extends PHPUnit_Framework_TestCase {
 
     public function testmappingIsThaiVowel() {
         $vowel = $this->thaiMapper->mappingIsThaiVowel();
-        $assrt = "ั,า,ิ,ี,ุ,ู,ฤ,ฤๅ,ฦ,ฦๅ,เ,โ,ไ,เา";
+        $assrt = "ั,า,ิ,ี,ุ,ู,ฤ,ฤๅ,ฦ,ฦๅ,เ,โ,ไ,เา,ँ";
         $revert = $this->thaiMapper->setRevertFlag(array(), $vowel);
         $src = implode(",", $revert);
         $this->assertEquals($assrt, $src);

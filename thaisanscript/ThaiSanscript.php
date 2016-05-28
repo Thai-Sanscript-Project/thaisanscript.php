@@ -30,7 +30,7 @@ class ThaiSanscript {
     public $chandrabindu = "ँ";
     public $chandrabinduThaiInform = "ัํ";
     public $chandrabinduRoman = "m̐";
-    public $chandrabinduRomanSingle = "ṁ";
+    public $chandrabinduRomanSingle = "m̐";
     public $anusvara = "ํ";
     public $thaiVowelInFist = array(
         'ะ' => 'อะ',
@@ -62,7 +62,8 @@ class ThaiSanscript {
     public $mixVowel = array(
         "ai" => "ไ",
         "au" => "เา",
-        "r̥" => "ฤ"
+        "r̥" => "ฤ",
+        "m̐"=> "ँ"
     );
     public $singleConsonant = array(
         "k" => "ก",
@@ -90,7 +91,7 @@ class ThaiSanscript {
         "ṣ" => "ษ",
         "s" => "ส",
         "h" => "ห",
-        "ṁ" => "ँ",
+        "ṁ" => "ํ",
         "ṃ" => "ํ",
         "ḥ" => "ห์",
         "'" => "'"

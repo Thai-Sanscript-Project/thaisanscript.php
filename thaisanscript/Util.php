@@ -109,6 +109,7 @@ class Util {
                 $condition1 = $check &&
                         $this->isThaiConsonant($charList[$i - 2]) &&
                         $charList[$i - 1] == "ร" &&
+                        $charList[$i - 2] != "อ" &&
                         $charList[$i - 3] != "เ" &&
                         $charList[$i - 3] != "โ" &&
                         $charList[$i - 3] != "ไ";
@@ -119,7 +120,7 @@ class Util {
                 $condition2 = $check &&
                         $this->isThaiConsonant($charList[$i - 3]) &&
                         $charList[$i - 1] == "ร" &&
-                        $charList[$i - 2] == "ฺ" &&
+                        $charList[$i - 2] == "ฺ" &&                  
                         $charList[$i - 4] != "เ" &&
                         $charList[$i - 4] != "โ" &&
                         $charList[$i - 4] != "ไ";
@@ -169,7 +170,7 @@ class Util {
                         //$charList[$index] = $value;
                         $charList[$index] = str_replace($s1, $s2, $charList[$index]);
                     } elseif ($check1 && $charList[$index] == "า" && $charList[$index - 1] != "เ") {
-                       // $charList[$index] = $value;
+                        // $charList[$index] = $value;
                         $charList[$index] = str_replace($s1, $s2, $charList[$index]);
                     }
                 }

@@ -106,21 +106,24 @@ class Util {
             if ($check) {
 //432101234 แบบปรับรูป
 // FCR
+                $samyuta = $charList[$i - 1] == "ร" || $charList[$i - 1] == "ล";
                 $condition1 = $check &&
                         $this->isThaiConsonant($charList[$i - 2]) &&
-                        $charList[$i - 1] == "ร" &&
-                        $charList[$i - 2] != "อ" &&
+//                        $charList[$i - 1] == "ร" &&
+                        $samyuta &&
+                        $charList[$i - 2] != "อ" && //arogita,อะโรคิตะ,อโรคิต,
                         $charList[$i - 3] != "เ" &&
                         $charList[$i - 3] != "โ" &&
                         $charList[$i - 3] != "ไ";
 //                  ยaตฺกฺรเาญฺ
 //432101234 แบบคงรูป
 //FCDR
-
+                $samyutaKS = $charList[$i - 3] == "ก" && $charList[$i - 1] == "ษ";
                 $condition2 = $check &&
                         $this->isThaiConsonant($charList[$i - 3]) &&
-                        $charList[$i - 1] == "ร" &&
-                        $charList[$i - 2] == "ฺ" &&                  
+//                        $charList[$i - 1] == "ร" &&
+                        ($samyuta || $samyutaKS) &&
+                        $charList[$i - 2] == "ฺ" &&
                         $charList[$i - 4] != "เ" &&
                         $charList[$i - 4] != "โ" &&
                         $charList[$i - 4] != "ไ";
